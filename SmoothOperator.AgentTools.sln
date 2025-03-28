@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmoothOperator.AgentTools", "SmoothOperator.AgentTools\SmoothOperator.AgentTools.csproj", "{D0F33E0F-5A57-C9A8-A800-7745480C718A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0F33E0F-5A57-C9A8-A800-7745480C718A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F33E0F-5A57-C9A8-A800-7745480C718A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F33E0F-5A57-C9A8-A800-7745480C718A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F33E0F-5A57-C9A8-A800-7745480C718A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FA874DE7-FE5D-4F70-BAA5-8FC59FA2D92C}
+	EndGlobalSection
+EndGlobal
