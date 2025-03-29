@@ -64,7 +64,7 @@ await client.Chrome.GetDomAsync();
 - **Chrome Browser Control**: Navigate, interact with elements, and execute JavaScript
 - **Windows Automation**: Interact with Windows applications and UI elements
 - **System Operations**: Open applications and manage system state
-- **MCP Server**: once client.EnsureInstalledAsync() has been called, you find it at %appdata%appdata%\smoothoperator\AgentToolsServer\smooth-operator-server.exe
+- **MCP Server**: once client.EnsureInstalledAsync() has been called, you find it at %appdata%\smoothoperator\AgentToolsServer\smooth-operator-server.exe
 
 ## Documentation
 
