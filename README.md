@@ -20,6 +20,12 @@ Or using the NuGet Package Manager:
 Install-Package SmoothOperator.AgentTools
 ```
 
+## Prerequisites
+
+### Google Chrome
+
+The Smooth Operator Agent Tools library requires Google Chrome (or a compatible Chromium-based browser) to be installed on the system for browser automation features to work.
+
 ## Usage
 
 ```csharp
@@ -70,6 +76,7 @@ await client.Chrome.GetDomAsync();
 
 For detailed API documentation, visit:
 [https://smooth-operator.online/agent-tools-api-docs/toolserverdocs](https://smooth-operator.online/agent-tools-api-docs/toolserverdocs)
+*   **[Usage Guide (docs/usage_guide.md)](docs/usage_guide.md):** Detailed examples and explanations for common use cases.
 
 ## License
 

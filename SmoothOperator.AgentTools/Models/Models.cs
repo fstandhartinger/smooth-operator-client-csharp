@@ -609,8 +609,6 @@ namespace SmoothOperator.AgentTools.Models
         public string Id { get; set; }
         public string Name { get; set; }
         
-        public DateTime CreationDate { get; set; }
-
         public string ControlType { get; set; }
 
         public bool? SupportsSetValue { get; set; }
@@ -620,18 +618,65 @@ namespace SmoothOperator.AgentTools.Models
         public List<ControlDTO> Children { get; set; }
 
         public ControlDTO Parent { get; set; }
+        [JsonIgnore]
+        public IEnumerable<ControlDTO> ChildrenRecursive
+        {
+            get
+            {
+                if (Children == null)
+                {
+                    yield break;
+                }
 
-        public List<ControlDTO> ChildrenRecursive { get; set; }
+                foreach (var child in Children)
+                {
+                    yield return child;
+                    if (child.Children == null) continue;
+                    foreach (var subChild in child.ChildrenRecursive)
+                        yield return subChild;
+                }
+            }
+        }
 
-        public List<ControlDTO> AllChildrenRecursive { get; set; }
-        
-        public List<ControlDTO> ParentsRecursive { get; set; }
+        private List<ControlDTO> allChildrenRecursive;
+        [JsonIgnore]
+        public List<ControlDTO> AllChildrenRecursive =>
+            allChildrenRecursive ??= new List<ControlDTO>(ChildrenRecursive.ToList());
+        [JsonIgnore]
+        public IEnumerable<ControlDTO> ParentsRecursive
+        {
+            get
+            {
+                var x = this;
 
-        public ControlDTO ParentWindow { get; set; }    
+                while (x.Parent != null)
+                {
+                    yield return x.Parent;
+                    x = x.Parent;
+                }
+            }
+        }
+        [JsonIgnore]
+        public ControlDTO ParentWindow => ParentsRecursive.FirstOrDefault(x => x.ControlType == "Window");
 
-        public List<ControlDTO> AllParentsRecursive { get; set; }
+        private List<ControlDTO> allParentsRecursive;
+        [JsonIgnore]
+        public List<ControlDTO> AllParentsRecursive =>
+            allParentsRecursive ??= new List<ControlDTO>(ParentsRecursive.ToList());
 
-        public bool IsSmoothOperator { get; set; }
+        public IEnumerable<ControlDTO> GetChildrenRecursive(bool includeSelf = false)
+        {
+            if (includeSelf)
+                yield return this;
+            if (Children == null) yield break;
+            foreach (ControlDTO child in Children)
+            {
+                yield return child;
+                var grandChildren = child.GetChildrenRecursive();
+                foreach (var grandChild in grandChildren)
+                    yield return grandChild;
+            }
+        }
 
         public override string ToString()
         {
