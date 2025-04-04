@@ -516,9 +516,9 @@ namespace SmoothOperator.AgentTools
         }
 
         /// <summary>
-        /// Invokes default action on Windows UI element (e.g. click button)
+        /// Invokes default action on Windows UI element (e.g. click button) by Element ID (get from: Element ID from GetOverviewAsync/GetDetailsAsync/GetWindowDetailsAsync)
         /// </summary>
-        /// <param name="elementId">Element ID from GetOverviewAsync/GetDetailsAsync</param>
+        /// <param name="elementId">Element ID from GetOverviewAsync/GetDetailsAsync/GetWindowDetailsAsync</param>
         /// <returns>SimpleResponse indicating success or failure</returns>
         public Task<SimpleResponse> InvokeAsync(string elementId) // Removed action parameter, changed return type
         {
@@ -527,9 +527,9 @@ namespace SmoothOperator.AgentTools
         }
 
         /// <summary>
-        /// Set the value of a UI element
+        /// Set the value of a UI element by Element ID (get from: Element ID from GetOverviewAsync/GetDetailsAsync/GetWindowDetailsAsync)
         /// </summary>
-        /// <param name="elementId">ID of the UI element</param>
+        /// <param name="elementId">ID of the UI element (get from: Element ID from GetOverviewAsync/GetDetailsAsync/GetWindowDetailsAsync)</param>
         /// <param name="value">Value to set</param>
         /// <returns>SimpleResponse indicating success or failure</returns>
         public Task<SimpleResponse> SetValueAsync(string elementId, string value) // Changed return type

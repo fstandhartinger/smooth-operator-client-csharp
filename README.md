@@ -77,6 +77,7 @@ await client.Chrome.GetDomAsync();
 For detailed API documentation, visit:
 [https://smooth-operator.online/agent-tools-api-docs/toolserverdocs](https://smooth-operator.online/agent-tools-api-docs/toolserverdocs)
 *   **[Usage Guide (docs/usage_guide.md)](docs/usage_guide.md):** Detailed examples and explanations for common use cases.
+*   **[Example Project](https://github.com/fstandhartinger/smooth-operator-example-csharp):** Download, follow step-by-step instructions, and have your first automation running in minutes.
 
 ## License
 
