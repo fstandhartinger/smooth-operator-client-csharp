@@ -49,6 +49,8 @@ This ensures the correct server version is always available without manual insta
 ## Features
 
 *   **Fluent API:** Provides a clear and easy-to-use API categorized by functionality (System, Mouse, Keyboard, Screenshot, Automation, Chrome, Code).
+
+All features can be tested and explored through a convenient Windows user interface before implementing them in code. Try them out at [Smooth Operator Tools UI](https://smooth-operator.online/agent-tools-api-docs/toolserverdocs#windows-app).
 *   **Automatic Server Management:** The client library can automatically start the background server process when needed.
 *   **Cross-Platform Compatibility (Client):** The client library itself runs on any platform supported by .NET.
 *   **Windows Server Requirement:** The underlying `smooth-operator-server.exe` currently requires a Windows environment to perform the automation tasks.
