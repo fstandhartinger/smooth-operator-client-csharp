@@ -120,7 +120,7 @@ async Task Main()
 
 For detailed API documentation, please refer to:
 
-*   **[Usage Guide](../docs/usage_guide.md):** Detailed examples and explanations for common use cases.
+*   **[Usage Guide](docs/usage_guide.md):** Detailed examples and explanations for common use cases.
 *   **[Example Project](https://github.com/fstandhartinger/smooth-operator-example-csharp):** Download, follow step-by-step instructions, and have your first automation running in minutes.
 *   **[API Documentation](https://smooth-operator.online/agent-tools-api-docs/toolserverdocs):** Describes the endpoints of the local tools server the C# client library communicates with.
 
