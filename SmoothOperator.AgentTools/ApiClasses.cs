@@ -79,14 +79,15 @@ namespace SmoothOperator.AgentTools
         }
 
         /// <summary>
-        /// Opens Chrome browser (Playwright-managed instance)
+        /// Opens Chrome browser (Playwright-managed instance).
         /// </summary>
-        /// <param name="url">Optional URL to navigate to immediately</param>
-        /// <returns>SimpleResponse indicating success or failure</returns>
-        public Task<SimpleResponse> OpenChromeAsync(string url = null, string strategy = null)
+        /// <param name="url">Optional URL to navigate to immediately.</param>
+        /// <param name="strategy">Strategy for handling existing Chrome instances (0=ThrowError, 1=ForceClose, 2=StartWithoutUserProfile). Defaults to ThrowError.</param>
+        /// <returns>SimpleResponse indicating success or failure.</returns>
+        public Task<SimpleResponse> OpenChromeAsync(string url = null, ExistingChromeInstanceStrategy strategy = ExistingChromeInstanceStrategy.ThrowError)
         {
-            // Server returns SimpleResponse and accepts strategy
-            return _client.PostAsync<SimpleResponse>("/tools-api/system/open-chrome", new { url, strategy });
+            // Server returns SimpleResponse and accepts strategy as an integer
+            return _client.PostAsync<SimpleResponse>("/tools-api/system/open-chrome", new { url, strategy = (int)strategy });
         }
 
         /// <summary>
@@ -349,16 +350,19 @@ namespace SmoothOperator.AgentTools
             _client = client;
         }
 
+        
         /// <summary>
-        /// Opens Chrome browser (Playwright-managed instance)
+        /// Opens Chrome browser (Playwright-managed instance).
         /// </summary>
-        /// <param name="url">Optional URL to navigate to immediately</param>
-        /// <returns>SimpleResponse indicating success or failure</returns>
-        public Task<SimpleResponse> OpenChromeAsync(string url = null, string strategy = null) // Changed return type, added strategy
+        /// <param name="url">Optional URL to navigate to immediately.</param>
+        /// <param name="strategy">Strategy for handling existing Chrome instances (0=ThrowError, 1=ForceClose, 2=StartWithoutUserProfile). Defaults to ThrowError.</param>
+        /// <returns>SimpleResponse indicating success or failure.</returns>
+        public Task<SimpleResponse> OpenChromeAsync(string url = null, ExistingChromeInstanceStrategy strategy = ExistingChromeInstanceStrategy.ThrowError)
         {
-            // Server returns SimpleResponse and accepts strategy
-            return _client.PostAsync<SimpleResponse>("/tools-api/system/open-chrome", new { url, strategy });
+            // Server returns SimpleResponse and accepts strategy as an integer
+            return _client.PostAsync<SimpleResponse>("/tools-api/system/open-chrome", new { url, strategy = (int)strategy });
         }
+
 
         /// <summary>
         /// Gets detailed analysis of current Chrome tab including interactive elements
@@ -400,21 +404,18 @@ namespace SmoothOperator.AgentTools
         }
 
         /// <summary>
-        /// Uses AI vision to move mouse cursor to element based on description (consumes 50-100 tokens)
+        /// Switch to a specific Chrome tab by index or ID
         /// </summary>
-        /// <param name="userElementDescription">Natural language description of element (be specific and include unique identifiers)</param>
-        /// <param name="mechanism">The AI mechanism to use for finding the element (defaults to ScreenGrasp2).</param>
-        /// <returns>Action response with success status and coordinates</returns>
-        /// <remarks>
-        /// If you know the exact coordinates, use MoveAsync instead for faster operation.
-        /// Can optionally include a base64-encoded screenshot in the request body.
-        /// </remarks>
-        public Task<ActionResponse> MoveByDescriptionAsync(string userElementDescription, MechanismType mechanism = MechanismType.ScreenGrasp2)
+        /// <param name="index">0-based index of the tab</param>
+        /// <param name="id">ID of the tab</param>
+        /// <returns>Action response</returns>
+        /// <remarks>Provide either index or id.</remarks>
+        public Task<ActionResponse> SwitchTabAsync(int? index = null, string id = null)
         {
-            // Server expects TaskDescription and Mechanism
-            return _client.PostAsync<ActionResponse>("/tools-api/mouse/move-by-description", new { taskDescription = userElementDescription, Mechanism = mechanism.GetDescription() });
+            // Server expects Index (string) or Id (string)
+            string indexString = index.HasValue ? index.Value.ToString() : null;
+            return _client.PostAsync<ActionResponse>("/tools-api/chrome/switch-tab", new { Index = indexString, Id = id });
         }
-
         /// <summary>
         /// Clicks element in Chrome tab using CSS selector
         /// </summary>
@@ -446,18 +447,24 @@ namespace SmoothOperator.AgentTools
         }
 
         /// <summary>
-        /// Get the DOM of the current Chrome tab
+        /// Get the DOM of the current Chrome tab.
         /// </summary>
-        /// <returns>Action response with DOM content</returns>
+        /// <returns>Action response. The DOM content is available in the `Data` dictionary with the key "dom".</returns>
+        /// <remarks>
+        /// Access the DOM string like this: `response.Data["dom"]?.ToString()` after checking for success and non-null Data.
+        /// </remarks>
         public Task<ActionResponse> GetDomAsync()
         {
             return _client.PostAsync<ActionResponse>("/tools-api/chrome/get-dom", new { });
         }
 
         /// <summary>
-        /// Get the text content of the current Chrome tab
+        /// Get the text content of the current Chrome tab.
         /// </summary>
-        /// <returns>Action response with text content</returns>
+        /// <returns>Action response. The text content is available in the `Data` dictionary with the key "text".</returns>
+        /// <remarks>
+        /// Access the text string like this: `response.Data["text"]?.ToString()` after checking for success and non-null Data.
+        /// </remarks>
         public Task<ActionResponse> GetTextAsync()
         {
             return _client.PostAsync<ActionResponse>("/tools-api/chrome/get-text", new { });
@@ -503,7 +510,7 @@ namespace SmoothOperator.AgentTools
         {
             _client = client;
         }
-
+        
         /// <summary>
         /// Launches an application by path or name
         /// </summary>
@@ -548,7 +555,7 @@ namespace SmoothOperator.AgentTools
             // Server returns SimpleResponse
             return _client.PostAsync<SimpleResponse>("/tools-api/automation/set-focus", new { elementId });
         }
-
+        
         /// <summary>
         /// Gets detailed UI automation information for a window
         /// </summary>
@@ -569,37 +576,6 @@ namespace SmoothOperator.AgentTools
         {
             // Server returns SimpleResponse
             return _client.PostAsync<SimpleResponse>("/tools-api/automation/bring-to-front", new { windowId });
-        }
-
-        /// <summary>
-        /// Find and click a Windows UI element by description
-        /// </summary>
-        /// <param name="description">Description of the UI element</param>
-        /// <returns>Action response</returns>
-        public Task<ActionResponse> ClickElementAsync(string description)
-        {
-            return _client.PostAsync<ActionResponse>("/tools-api/automation/click-element", new { description });
-        }
-
-        /// <summary>
-        /// Find a Windows UI element by description and type text into it
-        /// </summary>
-        /// <param name="description">Description of the UI element</param>
-        /// <param name="text">Text to type</param>
-        /// <returns>Action response</returns>
-        public Task<ActionResponse> TypeInElementAsync(string description, string text)
-        {
-            return _client.PostAsync<ActionResponse>("/tools-api/automation/type-in-element", new { description, text });
-        }
-
-        /// <summary>
-        /// Get text from a Windows UI element by description
-        /// </summary>
-        /// <param name="description">Description of the UI element</param>
-        /// <returns>Action response with element text</returns>
-        public Task<ActionResponse> GetElementTextAsync(string description)
-        {
-            return _client.PostAsync<ActionResponse>("/tools-api/automation/get-element-text", new { description });
         }
 
         /// <summary>
@@ -649,4 +625,23 @@ namespace SmoothOperator.AgentTools
         /// <returns>The string "CodeApi".</returns>
         public override string ToString() => nameof(CodeApi);
     }
+
+    public enum ExistingChromeInstanceStrategy
+    {
+        /// <summary>
+        /// Throw an error if an existing Chrome instance is using the same user profile.
+        /// </summary>
+        ThrowError,
+
+        /// <summary>
+        /// Force close any existing Chrome instances before starting a new one.
+        /// </summary>
+        ForceClose,
+
+        /// <summary>
+        /// Start a Playwright-managed Chrome without using the user profile.
+        /// </summary>
+        StartWithoutUserProfile
+    }
+
 }

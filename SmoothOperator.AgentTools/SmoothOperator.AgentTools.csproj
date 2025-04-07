@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
     <PackageId>SmoothOperator.AgentTools</PackageId>
-    <Version>1.0.95</Version>
+    <Version>1.0.102</Version>
     <Authors>Smooth Operator</Authors>
     <Company>Smooth Operator</Company>
     <Description>Use AI Vision and Windows-, Chrome-, Mouse- and Keyboard-Automation to automate tasks on Windows.
@@ -19,8 +19,8 @@ Also acts as a MCP server.</Description>
     <Title>Smooth Operator Agent Tools</Title>
     <PackageIcon>logo_128x128.jpg</PackageIcon>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.0.95</AssemblyVersion>
-    <FileVersion>1.0.95</FileVersion>
+    <AssemblyVersion>1.0.102</AssemblyVersion>
+    <FileVersion>1.0.102</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

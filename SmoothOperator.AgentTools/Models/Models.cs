@@ -221,15 +221,14 @@ namespace SmoothOperator.AgentTools.Models
         public string Message { get; set; }
 
         /// <summary>
-        /// Additional data (if applicable)
+        /// Additional result data data (if applicable)
         /// </summary>
-        [JsonExtensionData] // Ensures extra fields are captured here
-        public Dictionary<string, object> Data { get; set; }
+        public string ResultValue { get; set; }
 
         /// <summary>
         /// Returns a string representation summarizing the action response.
         /// </summary>
-        public override string ToString() => $"Action: {(Success ? "Success" : "Failed")}. {Message}{(Data?.Count > 0 ? $" Data Keys: {string.Join(", ", Data.Keys)}" : "")}";
+        public override string ToString() => $"Action: {(Success ? "Success" : "Failed")}. {Message}";
 
         /// <summary>
         /// Returns a JSON representation of the current object, for example to pass it to a LLM in order to decide on the next steps;
