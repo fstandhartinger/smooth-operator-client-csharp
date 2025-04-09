@@ -752,6 +752,7 @@ namespace SmoothOperator.AgentTools.Models
 
     public class SimpleResponse
     {
+        public bool Success { get; set; }
         public string Message { get; set; }
         public string InternalMessage { get; set; }
 
