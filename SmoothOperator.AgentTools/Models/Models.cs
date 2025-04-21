@@ -248,40 +248,15 @@ namespace SmoothOperator.AgentTools.Models
     /// </summary>
     public class ChromeTabDetails
     {
-        /// <summary>
-        /// Tab title
-        /// </summary>
-        public string Title { get; set; }
+        // Matches server-side definition in AutomationSystem/ChromeTabDetails.cs
+        public string CurrentTabTitle { get; set; }
+        public int CurrentTabIndex { get; set; }
+        public List<ChromeElementInfo> CurrentChromeTabMostRelevantElements { get; set; }
+        public List<ChromeOverview> ChromeInstances { get; set; }
+        public string Note { get; set; }
 
-        /// <summary>
-        /// Tab URL
-        /// </summary>
-        public string Url { get; set; }
+        public override string ToString() => $"Tab: {CurrentTabTitle} (#{CurrentTabIndex}) | Elements: {CurrentChromeTabMostRelevantElements?.Count ?? 0} | ChromeInstances: {ChromeInstances?.Count ?? 0} | Note: {Note}";
 
-        /// <summary>
-        /// Page content
-        /// </summary>
-        public string Content { get; set; }
-
-        /// <summary>
-        /// List of elements on the page
-        /// </summary>
-        public List<Dictionary<string, object>> Elements { get; set; }
-
-        /// <summary>
-        /// Summary of the page content
-        /// </summary>
-        public string Summary { get; set; }
-
-        /// <summary>
-        /// Returns a string representation summarizing the Chrome tab details.
-        /// </summary>
-        public override string ToString() => $"Tab Details: {Title ?? Url}. Summary: {Summary?.Substring(0, Math.Min(Summary.Length, 50))}...";
-
-        /// <summary>
-        /// Returns a JSON representation of the current object, for example to pass it to a LLM in order to decide on the next steps;
-        /// </summary>
-        /// <returns></returns>
         public string ToJsonString() => JsonSerializer.Serialize(this, new JsonSerializerOptions
         {
             WriteIndented = true,
